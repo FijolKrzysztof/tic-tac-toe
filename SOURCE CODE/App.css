@@ -1,0 +1,47 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  
+  background-color: #343a40;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.bt{
+  height: 14vh;
+  width: 14vh;
+  border-radius: 0px!important;
+}
+
+.col-auto{
+  background-color: white;
+}
+
+.img{
+  height: 10vh;
+}
+
+.reload{
+  height: 10vh;
+  width: 10vh;
+}
+
+.reload-font{
+  font-size: 6vh;
+}
+
+.align-self-center{
+  font-size: 10vh;
+}
+
+@keyframes animateVisibility{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
