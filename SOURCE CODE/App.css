@@ -28,9 +28,11 @@
   height: 10vh;
 }
 
-.reload{
+#reload{
   height: 10vh;
   width: 10vh;
+  background-color: white;
+  border-radius: 20px;
 }
 
 .reload-font{

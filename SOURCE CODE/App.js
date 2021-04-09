@@ -11,6 +11,7 @@ let proceed = true;
 class App extends Component {
   handleClick = (e) => {
     if(proceed === true){
+      proceed = false;
       let id = parseInt((e.target.id).slice(2), 10);
       let pass = true;
       if(takenFields[id] !== 0) pass = false;
@@ -21,10 +22,16 @@ class App extends Component {
           document.getElementById('x-' + id).style.opacity = '1';
           document.getElementById('x-' + id).style.animation = '';
           takenFields[id] = 1;
-          this.checkResult();
-          this.computerMove();
+          new Promise(resolve => {
+            this.checkResult();
+            resolve();
+          })
+          .then(() => {
+            this.computerMove();
+          })
         }, 900);
       }
+      else proceed = true;
     }
   }
 
@@ -103,7 +110,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <Navbar className="fixed-top bg-dark">
-            <Button className="reload" onClick={this.handleRestart} variant="outline-info"><h1 className="reload-font">⟳</h1></Button>
+            <button id="reload" className="btn" onClick={this.handleRestart}><h1 className="reload-font">⟳</h1></button>
           </Navbar>
           <Navbar className="fixed-bottom bg-dark justify-content-center">
             <h1 className="align-self-center"><Badge id="result" style={{display: 'block', opacity: 0}}></Badge></h1>
@@ -265,10 +272,10 @@ class App extends Component {
     setTimeout(() => {
       document.getElementById('o-' + move).style.animation = '';
       document.getElementById('o-' + move).style.opacity = '1';
-      turn += 2;
-      takenFields[move] = 2;
-      this.checkResult();
     }, 900);
+    turn += 2;
+    takenFields[move] = 2;
+    this.checkResult('move');
   }
 
   handlelLogic = (n1) => {
@@ -311,7 +318,7 @@ class App extends Component {
     return move;
   }
 
-  checkResult = () => {
+  checkResult = (e) => {
     let winner = null;
     for(let i = 1; i < 3; i ++){
       if(takenFields[1] === i && takenFields[2] === i && takenFields[3] === i) winner = i;
@@ -325,9 +332,10 @@ class App extends Component {
     }
 
     if(winner === 1) this.announceResult(1);
-    if(winner === 2) this.announceResult(2);
-    if(winner === null && turn > 8) this.announceResult(0);
+    else if(winner === 2) this.announceResult(2);
+    else if(winner === null && turn > 8) this.announceResult(0);
+    else if(e === 'move') proceed = true;
   }
 }
- 
+
 export default App;
